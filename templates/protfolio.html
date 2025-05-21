@@ -1,0 +1,2765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atinarapu Karthik | AI/ML Engineer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary-color: #1a1f2c;
+            --secondary-color: #2d3748;
+            --accent-color: #4FD1C5;
+            --accent-color-2: #38B2AC;
+            --dark-color: #0f172a;
+            --light-color: #F7FAFC;
+            --gradient-start: #1a1f2c;
+            --gradient-end: #2d3748;
+            --card-bg: rgba(26, 31, 44, 0.8);
+            --card-hover: rgba(79, 209, 197, 0.15);
+            --text-gradient: linear-gradient(45deg, var(--accent-color), var(--accent-color-2));
+            --glass-bg: rgba(26, 31, 44, 0.7);
+            --glass-border: rgba(79, 209, 197, 0.1);
+            --light-theme-bg: #f8fafc;
+            --light-theme-text: #1a202c;
+            --light-theme-card: rgba(255, 255, 255, 0.8);
+            --light-theme-border: rgba(79, 209, 197, 0.2);
+        }
+
+        body {
+            background: var(--dark-color);
+            color: var(--light-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Enhanced Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideRight {
+            from { transform: translateX(50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(79, 209, 197, 0.2); }
+            50% { box-shadow: 0 0 30px rgba(79, 209, 197, 0.4); }
+            100% { box-shadow: 0 0 5px rgba(79, 209, 197, 0.2); }
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        /* Enhanced Navbar */
+        .navbar {
+            position: fixed;
+            top: -100px;
+            width: 100%;
+            padding: 1.2rem 8%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .navbar.active {
+            top: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--light-color);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: transparent;
+        }
+
+        .nav-link:hover {
+            background: var(--card-hover);
+            color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        /* Enhanced Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            padding: 0 8%;
+            gap: 4rem;
+            background: linear-gradient(135deg, var(--dark-color), var(--secondary-color));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(79, 209, 197, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(79, 209, 197, 0.15) 0%, transparent 50%);
+            animation: glow 8s infinite;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: var(--text-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientFlow 8s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s ease forwards 0.5s;
+        }
+
+        /* Enhanced Profile Image */
+        .profile-image-container {
+            position: relative;
+            z-index: 1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .profile-image {
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(79, 209, 197, 0.3);
+            box-shadow: 0 0 50px rgba(79, 209, 197, 0.3);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.1) rotate(5deg);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 70px rgba(79, 209, 197, 0.5);
+        }
+
+        /* Enhanced Sections */
+        section {
+            padding: 8rem 8%;
+            position: relative;
+            background: var(--dark-color);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            font-size: 2.8rem;
+            position: relative;
+            padding-bottom: 1rem;
+            background: var(--text-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientFlow 8s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        section.visible .section-title {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--text-gradient);
+            border-radius: 2px;
+            animation: gradientFlow 8s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        /* Enhanced Cards */
+        .experience-item, .project-card, .certification-card, .education-item {
+            background: var(--glass-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .experience-item::before, .project-card::before, .certification-card::before, .education-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(79, 209, 197, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .experience-item:hover::before, .project-card:hover::before, .certification-card:hover::before, .education-item:hover::before {
+            left: 100%;
+        }
+
+        .experience-item:hover, .project-card:hover, .certification-card:hover, .education-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-color: var(--accent-color);
+        }
+
+        /* Chatbot Styles */
+        .chatbot-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+
+        .chatbot-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(79, 209, 197, 0.3);
+            transition: all 0.3s ease;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.1);
+            background: var(--primary-color);
+        }
+
+        .chatbot-window {
+            position: fixed;
+            bottom: 5rem;
+            right: 2rem;
+            width: 350px;
+            height: 500px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid rgba(79, 209, 197, 0.1);
+        }
+
+        .chatbot-header {
+            padding: 1rem;
+            background: var(--accent-color);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            border-radius: 10px;
+            max-width: 80%;
+            animation: scaleIn 0.3s ease-out forwards;
+        }
+
+        .bot-message {
+            background: rgba(79, 209, 197, 0.1);
+            margin-right: auto;
+        }
+
+        .user-message {
+            background: var(--accent-color);
+            margin-left: auto;
+        }
+
+        .chatbot-input {
+            padding: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .chatbot-input button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            background: var(--accent-color);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-input button:hover {
+            background: var(--primary-color);
+        }
+
+        /* Enhanced Tags */
+        .tech-stack, .company, .duration {
+            color: #94A3B8;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-tag, .tech-tag, .skill-tag {
+            background: rgba(79, 209, 197, 0.1);
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+            margin: 0.3rem;
+            display: inline-block;
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            border: 1px solid rgba(79, 209, 197, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-tag::before, .tech-tag::before, .skill-tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(79, 209, 197, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .feature-tag:hover::before, .tech-tag:hover::before, .skill-tag:hover::before {
+            left: 100%;
+        }
+
+        .feature-tag:hover, .tech-tag:hover, .skill-tag:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(79, 209, 197, 0.2);
+            background: rgba(79, 209, 197, 0.2);
+        }
+
+        /* Enhanced Footer */
+        footer {
+            background: var(--glass-bg);
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .social-links {
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links a {
+            color: var(--light-color);
+            font-size: 1.8rem;
+            margin: 0 1.2rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-block;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+            transform: translateY(-5px) scale(1.2);
+            text-shadow: 0 0 20px rgba(79, 209, 197, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 6rem 2rem;
+                gap: 2rem;
+            }
+            
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+            
+            .profile-image {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+            
+            .chatbot-window {
+                width: 90%;
+                right: 5%;
+                bottom: 5rem;
+            }
+        }
+
+        /* Enhanced Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(23, 25, 35, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 25px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            border: 1px solid rgba(79, 209, 197, 0.2);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal.active .modal-content {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--light-color);
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(79, 209, 197, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .close-btn:hover {
+            background: var(--accent-color);
+            transform: rotate(90deg);
+        }
+
+        /* Gesture Animations */
+        @keyframes slideInFromRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideInFromLeft {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideInFromBottom {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Education Details Styles */
+        .education-details {
+            padding: 1rem;
+        }
+
+        .education-details h3 {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .education-details .institution {
+            font-size: 1.2rem;
+            color: var(--light-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .education-details .duration {
+            color: var(--accent-color);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .education-details .achievements,
+        .education-details .courses,
+        .education-details .academic-performance {
+            margin-top: 1.5rem;
+        }
+
+        .education-details h4 {
+            color: var(--light-color);
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .education-details ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .education-details ul li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .education-details ul li::before {
+            content: '•';
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .education-details .academic-performance p {
+            font-size: 1.1rem;
+            color: var(--light-color);
+        }
+
+        /* Contact Section Styles */
+        .contact-section {
+            background: linear-gradient(135deg, var(--dark-color), var(--secondary-color));
+            padding: 6rem 8%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(79, 209, 197, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(79, 209, 197, 0.15) 0%, transparent 50%);
+            animation: glow 8s infinite;
+        }
+
+        .contact-container {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-card {
+            background: var(--glass-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            animation: float 6s ease-in-out infinite;
+            animation-delay: calc(var(--delay) * 1s);
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(79, 209, 197, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .contact-card:hover::before {
+            left: 100%;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-color: var(--accent-color);
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            transition: all 0.4s ease;
+        }
+
+        .contact-card:hover .contact-icon {
+            transform: scale(1.1);
+            color: var(--accent-color-2);
+        }
+
+        .contact-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--light-color);
+        }
+
+        .contact-card p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: var(--accent-color);
+            color: var(--dark-color);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .contact-button:hover::before {
+            left: 100%;
+        }
+
+        .contact-button:hover {
+            background: var(--accent-color-2);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(79, 209, 197, 0.3);
+        }
+
+        /* Message Popup Styles */
+        .message-popup {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--glass-bg);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transform: translateY(150%);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            max-width: 350px;
+        }
+
+        .message-popup.active {
+            transform: translateY(0);
+        }
+
+        .message-popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .message-popup-header h3 {
+            color: var(--accent-color);
+            margin: 0;
+            font-size: 1.3rem;
+        }
+
+        .message-popup-close {
+            background: none;
+            border: none;
+            color: var(--light-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .message-popup-close:hover {
+            color: var(--accent-color);
+            transform: rotate(90deg);
+            background: var(--card-hover);
+        }
+
+        .message-popup-content {
+            margin-bottom: 1.5rem;
+        }
+
+        .message-popup-content p {
+            color: var(--light-color);
+            margin: 0;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .message-popup-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .message-popup-button {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .message-popup-button.primary {
+            background: var(--accent-color);
+            color: var(--dark-color);
+        }
+
+        .message-popup-button.secondary {
+            background: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .message-popup-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 209, 197, 0.3);
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--text-gradient);
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            backdrop-filter: blur(10px);
+            z-index: 999;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            background: var(--card-hover);
+        }
+
+        .back-to-top i {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+        }
+
+        /* Skills Progress Bars */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .skill-item {
+            background: var(--glass-bg);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .skill-name {
+            font-weight: 500;
+            color: var(--light-color);
+        }
+
+        .skill-percentage {
+            color: var(--accent-color);
+        }
+
+        .skill-progress {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-progress-bar {
+            height: 100%;
+            background: var(--text-gradient);
+            border-radius: 4px;
+            width: 0;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .skills-tags-container {
+            margin-top: 3rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        /* Updated Skills Section Styles */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            padding: 2rem;
+        }
+
+        .skill-category {
+            background: var(--glass-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border-color: var(--accent-color);
+        }
+
+        .category-title {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .category-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: var(--text-gradient);
+            border-radius: 2px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(79, 209, 197, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .skill-card:hover::before {
+            left: 100%;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px) scale(1.05);
+            background: var(--card-hover);
+            box-shadow: 0 10px 20px rgba(79, 209, 197, 0.2);
+        }
+
+        .skill-card i {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            transition: all 0.4s ease;
+        }
+
+        .skill-card:hover i {
+            transform: scale(1.2);
+            color: var(--accent-color-2);
+        }
+
+        .skill-card span {
+            display: block;
+            color: var(--light-color);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* Animation for skill cards */
+        @keyframes skillCardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .skill-card {
+            animation: skillCardAppear 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .skill-card:nth-child(1) { animation-delay: 0.1s; }
+        .skill-card:nth-child(2) { animation-delay: 0.2s; }
+        .skill-card:nth-child(3) { animation-delay: 0.3s; }
+
+        /* Light theme adjustments */
+        body.light-theme .skill-category {
+            background: var(--light-theme-card);
+            border-color: var(--light-theme-border);
+        }
+
+        body.light-theme .skill-card {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        body.light-theme .skill-card span {
+            color: var(--light-theme-text);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .skills-container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 1000;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(180deg);
+            background: var(--card-hover);
+        }
+
+        .theme-toggle i {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .skill-details {
+            padding: 1.5rem;
+        }
+
+        .skill-details h3 {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-details .proficiency {
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-details .proficiency-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .skill-details .proficiency-level {
+            height: 100%;
+            background: var(--text-gradient);
+            border-radius: 4px;
+            transition: width 1s ease-in-out;
+        }
+
+        .skill-details .description {
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .skill-details .projects {
+            margin-top: 1.5rem;
+        }
+
+        .skill-details .projects h4 {
+            color: var(--light-color);
+            margin-bottom: 1rem;
+        }
+
+        .skill-details .projects ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .skill-details .projects li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-color);
+        }
+
+        .skill-details .projects li::before {
+            content: '•';
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(79, 209, 197, 0.1);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .typing-indicator span {
+            height: 8px;
+            width: 8px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 2px;
+            animation: typing 1s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* PDF Viewer Styles */
+        .pdf-container {
+            margin-top: 1.5rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            overflow: hidden;
+            background: var(--glass-bg);
+            padding: 1rem;
+        }
+
+        .pdf-container embed {
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .view-pdf-btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: var(--accent-color);
+            color: var(--dark-color);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .view-pdf-btn:hover {
+            background: var(--accent-color-2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 209, 197, 0.3);
+        }
+
+        .transcripts {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .transcripts h4 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .video-container {
+            width: 100%;
+            margin: 1rem 0;
+            border-radius: 10px;
+            overflow: hidden;
+            background: var(--glass-bg);
+            padding: 1rem;
+        }
+
+        .video-container video {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .project-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+            align-items: center;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--accent-color);
+            color: var(--dark-color);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            background: var(--accent-color-2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 209, 197, 0.3);
+        }
+
+        .project-description {
+            white-space: pre-line;
+            line-height: 1.6;
+            margin: 1.5rem 0;
+        }
+
+        /* Add new styles for experience section */
+        .employment-type, .location, .location-type, .start-date {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .employment-type i, .location i, .location-type i, .start-date i {
+            font-size: 1rem;
+        }
+
+        .skills {
+            margin-top: 1rem;
+        }
+
+        .skills h4 {
+            color: var(--light-color);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .description {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .description h4 {
+            color: var(--light-color);
+            margin-bottom: 1rem;
+        }
+
+        .description p {
+            color: var(--light-color);
+            line-height: 1.6;
+        }
+
+        .offer-letter {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .offer-letter h4 {
+            color: var(--light-color);
+            margin-bottom: 1rem;
+        }
+
+        .resume-section {
+            padding: 6rem 8%;
+            background: linear-gradient(135deg, var(--dark-color), var(--secondary-color));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .resume-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(79, 209, 197, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(79, 209, 197, 0.15) 0%, transparent 50%);
+            animation: glow 8s infinite;
+        }
+
+        .resume-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .resume-card {
+            background: var(--glass-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .resume-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(79, 209, 197, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .resume-card:hover::before {
+            left: 100%;
+        }
+
+        .resume-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-color: var(--accent-color);
+        }
+
+        .resume-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            transition: all 0.4s ease;
+        }
+
+        .resume-card:hover .resume-icon {
+            transform: scale(1.1);
+            color: var(--accent-color-2);
+        }
+
+        .resume-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--light-color);
+        }
+
+        .resume-card p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        .resume-card .pdf-container {
+            margin-top: 1.5rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            overflow: hidden;
+            background: var(--glass-bg);
+            padding: 1rem;
+        }
+
+        .resume-card .pdf-container embed {
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .resume-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading"></div>
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="#home" class="nav-link">Home</a></li>
+            <li><a href="#about" class="nav-link">About</a></li>
+            <li><a href="#education" class="nav-link">Education</a></li>
+            <li><a href="#projects" class="nav-link">Projects</a></li>
+            <li><a href="#skills" class="nav-link">Skills</a></li>
+            <li><a href="#experience" class="nav-link">Experience</a></li>
+            <li><a href="#certifications" class="nav-link">Certifications</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Atinarapu Karthik</h1>
+                <p>AI/ML Engineer</p>
+                <p>I'm passionate about web development and exploring Artificial Intelligence & Machine Learning. Continuously growing my skills through real projects and dedicated learning.</p>
+            </div>
+        </div>
+        <div class="profile-image-container">
+            <img src="{{ url_for('static', filename='profile.jpg') }}" alt="Profile Picture" class="profile-image">
+        </div>
+    </section>
+
+    <section id="about">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>I'm a passionate 3rd-year Computer Science student at TRR College of Technology with expertise in C, C++, Java, and web technologies. Currently expanding my skills in AI/ML and Cybersecurity through various projects and coursework. Developed multiple web applications including a study resource platform and movie recommendation system, demonstrating strong problem-solving abilities and technical proficiency.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="education">
+        <h2 class="section-title">Education</h2>
+        <div id="education-container"></div>
+    </section>
+
+    <section id="projects">
+        <h2 class="section-title">Projects</h2>
+        <div id="projects-container"></div>
+    </section>
+
+    <section id="skills">
+        <h2 class="section-title">Skills</h2>
+        <div class="skills-container">
+            <div class="skill-category">
+                <h3 class="category-title">Programming Languages</h3>
+                <div class="skills-grid">
+                    <div class="skill-card" data-skill="C/C++">
+                        <i class="fas fa-code"></i>
+                        <span>C/C++</span>
+                    </div>
+                    <div class="skill-card" data-skill="Java">
+                        <i class="fab fa-java"></i>
+                        <span>Java</span>
+                    </div>
+                    <div class="skill-card" data-skill="Python">
+                        <i class="fab fa-python"></i>
+                        <span>Python</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3 class="category-title">Web Development</h3>
+                <div class="skills-grid">
+                    <div class="skill-card" data-skill="HTML5">
+                        <i class="fab fa-html5"></i>
+                        <span>HTML5</span>
+                    </div>
+                    <div class="skill-card" data-skill="CSS3">
+                        <i class="fab fa-css3-alt"></i>
+                        <span>CSS3</span>
+                    </div>
+                    <div class="skill-card" data-skill="JavaScript">
+                        <i class="fab fa-js"></i>
+                        <span>JavaScript</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3 class="category-title">Tools & Technologies</h3>
+                <div class="skills-grid">
+                    <div class="skill-card" data-skill="Git">
+                        <i class="fab fa-git-alt"></i>
+                        <span>Git</span>
+                    </div>
+                    <div class="skill-card" data-skill="VS Code">
+                        <i class="fas fa-code"></i>
+                        <span>VS Code</span>
+                    </div>
+                    <div class="skill-card" data-skill="GitHub">
+                        <i class="fab fa-github"></i>
+                        <span>GitHub</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3 class="category-title">AI & ML</h3>
+                <div class="skills-grid">
+                    <div class="skill-card" data-skill="Machine Learning">
+                        <i class="fas fa-brain"></i>
+                        <span>Machine Learning</span>
+                    </div>
+                    <div class="skill-card" data-skill="Deep Learning">
+                        <i class="fas fa-network-wired"></i>
+                        <span>Deep Learning</span>
+                    </div>
+                    <div class="skill-card" data-skill="Data Science">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Data Science</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <h2 class="section-title">Experience</h2>
+        <div id="experience-container"></div>
+    </section>
+
+    <section id="certifications">
+        <h2 class="section-title">Certifications</h2>
+        <div id="certifications-container"></div>
+    </section>
+
+    <!-- Add Resume Section -->
+    <section id="resume" class="resume-section">
+        <h2 class="section-title">Resume</h2>
+        <div class="resume-container">
+            <div class="resume-card">
+                <div class="resume-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <h3>Resume-1</h3>
+                <p>View my technical skills and experience</p>
+                <div class="pdf-container">
+                    <embed src="/static/pdfs/White Orange Simple Sales Resume (7).pdf#toolbar=0" type="application/pdf" width="100%" height="500px">
+                    <a href="/static/pdfs/White Orange Simple Sales Resume (7).pdf" target="_blank" class="view-pdf-btn">View Full Resume</a>
+                </div>
+            </div>
+            <div class="resume-card">
+                <div class="resume-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <h3>Resume-2</h3>
+                <p>View my academic achievements and qualifications</p>
+                <div class="pdf-container">
+                    <embed src="/static/pdfs/ATINARAPU-KARTHIK-FlowCV-Resume-20250503 (2).pdf#toolbar=0" type="application/pdf" width="100%" height="500px">
+                    <a href="/static/pdfs/ATINARAPU-KARTHIK-FlowCV-Resume-20250503 (2).pdf" target="_blank" class="view-pdf-btn">View Full Resume</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modified Keep in Touch Section -->
+    <section id="contact" class="contact-section">
+        <h2 class="section-title">Keep in Touch</h2>
+        <div class="contact-container">
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <h3>Chat on WhatsApp</h3>
+                <p>Let's connect and discuss opportunities!</p>
+                <button class="contact-button" onclick="showMessagePopup('whatsappPopup')">
+                    <i class="fab fa-whatsapp"></i> Message Me
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://github.com/karthik-ak-Git" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/atinarapu-karthik-683719363/" target="_blank"><i class="fab fa-linkedin"></i></a>
+        </div>
+        <p>&copy; 2024 Atinarapu Karthik. All rights reserved.</p>
+    </footer>
+
+    <!-- Remove email popup -->
+    <div class="message-popup" id="whatsappPopup">
+        <div class="message-popup-header">
+            <h3>Chat on WhatsApp</h3>
+            <button class="message-popup-close" onclick="closeMessagePopup('whatsappPopup')">&times;</button>
+        </div>
+        <div class="message-popup-content">
+            <p>Would you like to start a conversation on WhatsApp?</p>
+        </div>
+        <div class="message-popup-actions">
+            <button class="message-popup-button secondary" onclick="closeMessagePopup('whatsappPopup')">Cancel</button>
+            <button class="message-popup-button primary" onclick="openWhatsApp()">Start Chat</button>
+        </div>
+    </div>
+
+    <div class="scroll-progress"></div>
+    
+    <button class="back-to-top" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Add back the modal -->
+    <div class="modal" id="detailsModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Add back the chatbot -->
+    <div class="chatbot-container">
+        <button class="chatbot-button" onclick="toggleChatbot()">
+            <i class="fas fa-robot"></i>
+        </button>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <h3>Portfolio Assistant</h3>
+                <button onclick="toggleChatbot()" style="background: none; border: none; color: white; cursor: pointer;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="message bot-message">
+                    Hello! I'm your portfolio assistant. How can I help you today?
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="userInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // Function Declarations First
+    function showDetails(type, id) {
+        const data = portfolioData[type].find(item => item.id === id);
+        const modalBody = document.getElementById('modal-body');
+        let content = '';
+        
+        const modal = document.getElementById('detailsModal');
+        modal.className = 'modal';
+        
+        if(type === 'certifications') {
+            content = `
+                <h3>${data.name}</h3>
+                <div class="certification-details">
+                    <p><strong>Issuer:</strong> ${data.issuer}</p>
+                    <p><strong>Year:</strong> ${data.year}</p>
+                    ${data.credentialID ? `<p><strong>Credential ID:</strong> ${data.credentialID}</p>` : ''}
+                    ${data.pdf ? `
+                        <div class="pdf-container">
+                            <embed src="${data.pdf}#toolbar=0" type="application/pdf" width="100%" height="500px">
+                            <a href="${data.pdf}" target="_blank" class="view-pdf-btn">View Full PDF</a>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            modal.classList.add('slide-in-right');
+        }
+        else if(type === 'projects') {
+            content = `
+                <div class="project-details">
+                    <h3>${data.title}</h3>
+                    <div class="project-meta">
+                        <span class="tech-used">${data.tech}</span>
+                        ${data.gitHub ? `
+                            <a href="${data.gitHub}" class="project-link" target="_blank">
+                                <i class="fab fa-github"></i> View on GitHub
+                            </a>
+                        ` : ''}
+                        ${data.linkedin ? `
+                            <a href="${data.linkedin}" class="project-link" target="_blank">
+                                <i class="fab fa-linkedin"></i> View on LinkedIn
+                            </a>
+                        ` : ''}
+                        ${data.link ? `
+                            <a href="${data.link}" class="project-link" target="_blank">
+                                <i class="fas fa-external-link-alt"></i> View Project
+                            </a>
+                        ` : ''}
+                    </div>
+                    <p class="project-description">${data.description}</p>
+                    ${data.features?.length > 0 ? `
+                        <div class="project-features">
+                            <h4>Key Features:</h4>
+                            <ul>
+                                ${data.features.map(feature => `<li>${feature}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+                    ${data.media?.length > 0 ? `
+                        <div class="media-gallery">
+                            ${data.media.map(m => {
+                                if (m.endsWith('.mp4')) {
+                                    return `
+                                        <div class="video-container">
+                                            <video controls>
+                                                <source src="${m}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        </div>
+                                    `;
+                                } else {
+                                    return `<img src="${m}" class="media-item" alt="Project screenshot">`;
+                                }
+                            }).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            modal.classList.add('slide-in-bottom');
+        }
+        else if(type === 'experience') {
+            content = `
+                <div class="experience-details">
+                    <h3>${data.position}</h3>
+                    <div class="company">${data.company}</div>
+                    <div class="duration">${data.duration}</div>
+                    ${data.employment_type ? `<div class="employment-type"><i class="fas fa-briefcase"></i> ${data.employment_type}</div>` : ''}
+                    ${data.location ? `<div class="location"><i class="fas fa-map-marker-alt"></i> ${data.location}</div>` : ''}
+                    ${data.location_type ? `<div class="location-type"><i class="fas fa-globe"></i> ${data.location_type}</div>` : ''}
+                    ${data.start_date ? `<div class="start-date"><i class="fas fa-calendar-alt"></i> Start: ${data.start_date}</div>` : ''}
+                    <div class="tech-used">
+                        ${data.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                    </div>
+                    ${data.skills ? `
+                        <div class="skills">
+                            <h4>Skills:</h4>
+                            ${Array.isArray(data.skills) ? 
+                                data.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('') :
+                                `<span class="skill-tag">${data.skills}</span>`
+                            }
+                        </div>
+                    ` : ''}
+                    ${data.description ? `
+                        <div class="description">
+                            <h4>Description:</h4>
+                            <p>${data.description}</p>
+                        </div>
+                    ` : ''}
+                    ${data.offerletter ? `
+                        <div class="offer-letter">
+                            <h4>Offer Letter:</h4>
+                            <div class="pdf-container">
+                                <embed src="${data.offerletter}#toolbar=0" type="application/pdf" width="100%" height="500px">
+                                <a href="${data.offerletter}" target="_blank" class="view-pdf-btn">View Full Offer Letter</a>
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            modal.classList.add('slide-in-left');
+        }
+        else if(type === 'education') {
+            content = `
+                <div class="education-details">
+                    <h3>${data.degree}</h3>
+                    <div class="institution">${data.institution}</div>
+                    <div class="duration">${data.duration}</div>
+                    ${data.achievements ? `
+                        <div class="achievements">
+                            <h4>Key Achievements:</h4>
+                            <ul>
+                                ${data.achievements.map(a => `<li>${a}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+                    ${data.courses ? `
+                        <div class="courses">
+                            <h4>Relevant Courses:</h4>
+                            <ul>
+                                ${data.courses.map(course => `<li>${course}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+                    ${data.gpa ? `
+                        <div class="academic-performance">
+                            <h4>Academic Performance:</h4>
+                            <p>GPA: ${data.gpa}</p>
+                        </div>
+                    ` : ''}
+                    ${data.transcripts ? `
+                        <div class="transcripts">
+                            <h4>Academic Transcript:</h4>
+                            <div class="pdf-container">
+                                <embed src="${data.transcripts}#toolbar=0" type="application/pdf" width="100%" height="500px">
+                                <a href="${data.transcripts}" target="_blank" class="view-pdf-btn">View Full Transcript</a>
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            modal.classList.add('slide-in-bottom');
+        }
+
+        modalBody.innerHTML = content;
+        modal.style.display = 'block';
+        
+        setTimeout(() => {
+            modal.classList.add('active');
+        }, 10);
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('detailsModal');
+        modal.classList.remove('active');
+        
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300);
+    }
+
+    // Portfolio Data
+    const portfolioData = {
+        projects: [
+            {
+                id: 1,
+                title: "Diploma Learn – Educational Study Platform",
+                tech: "HTML, CSS, JavaScript, Gemini API",
+                description: "Developed a responsive and user-friendly educational website designed for diploma students, focusing on essential learning resources and coding practice. Key features include Curated Content: Delivered video tutorials and concise study material focused only on the most important topics Integrated Code Playground: Implemented a built-in compiler using JavaScript for real-time code execution AI-Powered Chatbot: Built an interactive chatbot using the Gemini API to provide instant responses and learning assistance Community Section: Created a forum-like space for peer discussions and collaborative learning Login System: Enabled secure login/logout features for personalized access",
+                gitHub: "https://github.com/karthik-ak-Git/Diploma-Learn",
+                linkedin: "https://www.linkedin.com/posts/atinarapu-karthik-683719363_im-happy-to-share-this-diploma-learn-educational-activity-7324810891579842560-So0L?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFpXVYMBu3Pjdrb01gvLir9EB83oaZF1QCE",
+                features: [
+                    "Responsive design for desktop",
+                    "Clean and intuitive UI",
+                    "Improved access to programming languages",
+                    "AI-Powered Chatbot Integration",
+                    "Built-in Code Playground",
+                    "Community Forum",
+                    "Secure Login System"
+                ],
+            },
+            {
+                id: 2,
+                title: "Movie Recommendation Website",
+                tech: "HTML, CSS, JavaScript, API integration and asynchronous",
+                description: "Built with HTML, CSS, JavaScript | APIs: Gemini & OMDb I developed a Movie Recommender web application that delivers personalized movie suggestions based on user moods, genres, and language preferences. The app integrates Gemini API for intelligent, NLP-based recommendations and OMDb API for rich movie details like posters and metadata.💡 Key Features: 🔐 User Authentication with secure login/signup (localStorage-based).🎞️ Personalized Recommendations using natural language input.🌍 Language Filtering: Supports Hollywood, Bollywood, Telugu, Hindi, English, and Korean movies.📱 Responsive UI: Clean, mobile-friendly interface.⚠️ Error Handling: User-friendly messages and retry logic for failed API calls.🛠 Tech Stack: HTML, CSS, JavaScript, Gemini API, OMDb API📌 This project enhanced  JavaScript User authentication & session handling Responsive front-end development Building user-centric interfaces",
+                gitHub: "https://github.com/karthik-ak-Git/movie-recommendation",
+                linkedin: "https://www.linkedin.com/posts/atinarapu-karthik-683719363_im-happy-to-share-this-movie-recommendation-activity-7330865087131316224-O_kj?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFpXVYMBu3Pjdrb01gvLir9EB83oaZF1QCE",
+                features: [
+                    "Genre selection-based suggestions",
+                    "JavaScript-powered dynamic rendering",
+                    "Smooth and clean UI for better UX"
+                ],
+            },
+            {
+                id: 3,
+                title: "Sentiment Analysis Web Application",
+                tech: "HTML5, CSS, JavaScript, Particles.js, Animate.css, Python, Flask, NLP libraries (e.g., TextBlob, NLTK)",
+                description: "Built with HTML, CSS, JavaScript | APIs: Gemini & OMDb I developed a Movie Recommender web application that delivers personalized movie suggestions based on user moods, genres, and language preferences. The app integrates Gemini API for intelligent, NLP-based recommendations and OMDb API for rich movie details like posters and metadata.💡 Key Features: 🔐 User Authentication with secure login/signup (localStorage-based).🎞️ Personalized Recommendations using natural language input.🌍 Language Filtering: Supports Hollywood, Bollywood, Telugu, Hindi, English, and Korean movies.📱 Responsive UI: Clean, mobile-friendly interface.⚠️ Error Handling: User-friendly messages and retry logic for failed API calls.🛠 Tech Stack: HTML, CSS, JavaScript, Gemini API, OMDb API📌 This project enhanced  JavaScript User authentication & session handling Responsive front-end development Building user-centric interfaces",
+                gitHub: "https://github.com/karthik-ak-Git/Sentiment-analysis",
+                linkedin: "https://www.linkedin.com/posts/atinarapu-karthik-683719363_im-happy-to-share-this-sentiment-analysis-activity-7330880615682080769--5Fv?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFpXVYMBu3Pjdrb01gvLir9EB83oaZF1QCE",
+                features: [
+                    "JavaScript-powered dynamic rendering",
+                    "Smooth and clean UI for better UX"
+                ]
+            }
+        ],
+        experience: [
+            {
+                id: 1,
+                company: "Besant Technologies",
+                position: "Java Intern",
+                duration: "1 month",
+                technologies: ["Java", "OOP", "Java Applications"],
+                certificate: "/static/pdfs/java_internship.pdf"
+            },
+            {
+                id: 2,
+                company: "Unified mentor",
+                position: "Machine Learning Engineer",
+                employment_type: "part time",
+                start_date: "may-2025",
+                location: "Office 809, floor 8, JMD Megapolis, Sector 48, Gurugram, Haryana 122018",
+                location_type: "Remote",
+                duration: "6 months",
+                technologies: ["Machine Learning"],
+                skills: "Machine Learning",
+                description: "Learning the Machine Learning in the unified mentor with internship and industrial training",
+                offerletter: "/static/pdfs/1746371563744.pdf"
+            },
+            {
+                id: 3,
+                company: "Micro IT",
+                position: "Software Developer intern",
+                employment_type: "part time",
+                start_date: "may-2025",
+                location: "Ambala, Haryana, India",
+                location_type: "Remote",
+                duration: "1 month",
+                technologies: ["Artificial Intelligence/Machine Learning"],
+                skills: ["Machine Learning", "Artificial Intelligence"],
+                description: "Artificial intelligence and machine learning intern Excited to share that I've been selected for the Micro IT – Batch 28 Internship! Grateful for this opportunity to learn, grow, and innovate with a great team.",
+                offerletter: "/static/pdfs/Atinarapu Karthik T.R.R College of Technology.pdf"
+            }
+        ],
+        certifications: [
+            {
+                id: 1,
+                name: "Java Programming Training Certificate",
+                issuer: "Besant Technologies",
+                year: "2023",
+                pdf: "/static/pdfs/1746373378470.pdf"
+            }
+        ],
+        education: [
+            {
+                id: 1,
+                degree: "Diploma (polytechnic)",
+                institution: "TRR College of Technology",
+                duration: "Currently in 3rd year (2023–2025)",
+                achievements: [],
+                branch: ["Computer Science"],
+                gpa: "9.0"
+            },
+            {
+                id: 2,
+                degree: "Secondary School Certificate (SSC)",
+                institution: "ZPHS Shivarampally",
+                duration: "6th-10th Completed in 2023",
+                gpa: "8.7"
+            },
+            {
+                id: 3,
+                degree: "Primary Education",
+                institution: "Aradhana the school",
+                duration: "Grades Nursery–5"
+            }
+        ]
+    };
+
+    // Add skill details
+    const skillDetails = {
+        'C/C++': {
+            proficiency: 85,
+            description: 'Strong foundation in C/C++ programming with experience in data structures and algorithms.',
+        },
+        'Java': {
+            proficiency: 80,
+            description: 'Proficient in Core Java with experience in object-oriented programming and application development.',
+        },
+        'Python': {
+            proficiency: 50,
+            description: 'Experience in Python programming with focus on AI/ML applications and data analysis.',
+            projects: [
+                'Machine Learning projects',
+            ]
+        },
+        'HTML5': {
+            proficiency: 90,
+            description: 'Expert in HTML5 with focus on semantic markup and accessibility.',
+            projects: [
+                'Responsive web applications',
+                'Modern UI implementations',
+                'Accessible web content'
+            ]
+        },
+        'CSS3': {
+            proficiency: 85,
+            description: 'Advanced CSS3 skills including animations, flexbox, and grid layouts.',
+            projects: [
+                'Responsive designs',
+                'CSS animations',
+                'Modern layouts'
+            ]
+        },
+        'JavaScript': {
+            proficiency: 80,
+            description: 'Strong JavaScript skills with experience in modern frameworks and DOM manipulation.',
+            projects: [
+                'Interactive web applications',
+                'Dynamic content loading',
+                'Form validations'
+            ]
+        }
+    };
+
+    // Render Content
+    function renderContent() {
+        // Projects rendering
+        const projectsContainer = document.getElementById('projects-container');
+        if (projectsContainer) {
+            projectsContainer.innerHTML = portfolioData.projects.map(project => `
+                <div class="project-card" onclick="showDetails('projects', ${project.id})">
+                    <h3>${project.title}</h3>
+                    <div class="tech-stack">${project.tech}</div>
+                    <p class="project-description">${project.description}</p>
+                    <div class="project-features">
+                        ${project.features.map(feature => `<span class="feature-tag">${feature}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Experience rendering
+        const experienceContainer = document.getElementById('experience-container');
+        if (experienceContainer) {
+            experienceContainer.innerHTML = portfolioData.experience.map(exp => `
+                <div class="experience-item" onclick="showDetails('experience', ${exp.id})">
+                    <h3>${exp.position}</h3>
+                    <div class="company">${exp.company}</div>
+                    <div class="duration">${exp.duration}</div>
+                    ${exp.employment_type ? `<div class="employment-type"><i class="fas fa-briefcase"></i> ${exp.employment_type}</div>` : ''}
+                    ${exp.location ? `<div class="location"><i class="fas fa-map-marker-alt"></i> ${exp.location}</div>` : ''}
+                    ${exp.location_type ? `<div class="location-type"><i class="fas fa-globe"></i> ${exp.location_type}</div>` : ''}
+                    ${exp.start_date ? `<div class="start-date"><i class="fas fa-calendar-alt"></i> Start: ${exp.start_date}</div>` : ''}
+                    <div class="tech-used">
+                        ${exp.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                    </div>
+                    ${exp.skills ? `
+                        <div class="skills">
+                            <h4>Skills:</h4>
+                            ${Array.isArray(exp.skills) ? 
+                                exp.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('') :
+                                `<span class="skill-tag">${exp.skills}</span>`
+                            }
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        // Certifications rendering
+        const certificationsContainer = document.getElementById('certifications-container');
+        if (certificationsContainer) {
+            certificationsContainer.innerHTML = portfolioData.certifications.map(cert => `
+                <div class="certification-card" onclick="showDetails('certifications', ${cert.id})">
+                    <h4>${cert.name}</h4>
+                    <div class="issuer">${cert.issuer}</div>
+                    <div class="certification-info">
+                        <span class="year">${cert.year}</span>
+                        ${cert.credentialID ? `<span class="credential-id">ID: ${cert.credentialID}</span>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Education rendering with click handler
+        const educationContainer = document.getElementById('education-container');
+        if (educationContainer) {
+            educationContainer.innerHTML = portfolioData.education.map(edu => `
+                <div class="education-item" onclick="showDetails('education', ${edu.id})">
+                    <h3>${edu.degree}</h3>
+                    <div class="institution">${edu.institution}</div>
+                    <div class="duration">${edu.duration}</div>
+                    ${edu.gpa ? `<div class="gpa">GPA: ${edu.gpa}</div>` : ''}
+                </div>
+            `).join('');
+        }
+    }
+
+    // Event Listeners and Initial Setup
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            renderContent();
+            
+            // Enhanced scroll animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        const cards = entry.target.querySelectorAll('.experience-item, .project-card, .certification-card');
+                        cards.forEach((card, index) => {
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                            }, index * 150);
+                        });
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('section').forEach(section => observer.observe(section));
+
+            // Navbar animation
+            window.addEventListener('scroll', () => {
+                document.querySelector('.navbar').classList.toggle('active', window.scrollY > 100);
+            });
+
+            // Smooth scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Add click handlers for skill cards
+            const skillCards = document.querySelectorAll('.skill-card');
+            skillCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const skillName = card.getAttribute('data-skill');
+                    const details = skillDetails[skillName];
+                    if (details) {
+                        showSkillDetails(skillName, details);
+                    }
+                });
+            });
+
+            // Initialize chatbot
+            initializeChatbot();
+        }, 100);
+    });
+
+    // Global event handler
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            closeModal();
+        }
+    }
+
+    // Add Chatbot Functionality
+    function toggleChatbot() {
+        const chatbotWindow = document.getElementById('chatbotWindow');
+        chatbotWindow.style.display = chatbotWindow.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    function handleKeyPress(event) {
+        if (event.key === 'Enter') {
+            sendMessage();
+        }
+    }
+
+    let socket;
+    let isTyping = false;
+
+    // Portfolio information for chatbot
+    const portfolioInfo = {
+        name: "Atinarapu Karthik",
+        role: "AI/ML Engineer",
+        about: "I'm a passionate 3rd-year Computer Science student at TRR College of Technology with expertise in C, C++, Java, and web technologies. Currently expanding my skills in AI/ML and Cybersecurity through various projects and coursework. Developed multiple web applications including a study resource platform and movie recommendation system, demonstrating strong problem-solving abilities and technical proficiency.",
+        education: [
+            {
+                degree: "Diploma (polytechnic)",
+                institution: "TRR College of Technology",
+                duration: "Currently in 3rd year (2023–2025)",
+                achievements: [],
+                branch: ["Computer Science"],
+                gpa: "9.0"
+            },
+            {
+                degree: "Secondary School Certificate (SSC)",
+                institution: "ZPHS Shivarampally",
+                duration: "6th-10th Completed in 2023",
+                gpa: "8.7"
+            },
+            {
+                degree: "Primary Education",
+                institution: "Aradhana the school",
+                duration: "Grades Nursery–5"
+            }
+        ],
+        skills: {
+            "Programming Languages": ["C/C++", "Java", "Python"],
+            "Web Development": ["HTML5", "CSS3", "JavaScript"],
+            "Tools & Technologies": ["Git", "VS Code", "GitHub"],
+            "AI & ML": ["Machine Learning", "Deep Learning", "Data Science"]
+        },
+        projects: [
+            {
+                name: "Diploma Learn – Educational Study Platform",
+                description: "Developed a responsive and user-friendly educational website designed for diploma students, focusing on essential learning resources and coding practice. Key features include Curated Content: Delivered video tutorials and concise study material focused only on the most important topics Integrated Code Playground: Implemented a built-in compiler using JavaScript for real-time code execution AI-Powered Chatbot: Built an interactive chatbot using the Gemini API to provide instant responses and learning assistance Community Section: Created a forum-like space for peer discussions and collaborative learning Login System: Enabled secure login/logout features for personalized access",
+                tech: "HTML, CSS, JavaScript, Gemini API",
+                features: [
+                    "Responsive design for desktop",
+                    "Clean and intuitive UI",
+                    "Improved access to programming languages",
+                    "AI-Powered Chatbot Integration",
+                    "Built-in Code Playground",
+                    "Community Forum",
+                    "Secure Login System"
+                ],
+                links: {
+                    github: "https://github.com/karthik-ak-Git/Diploma-Learn",
+                    linkedin: "https://www.linkedin.com/posts/atinarapu-karthik-683719363_im-happy-to-share-this-diploma-learn-educational-activity-7324810891579842560-So0L"
+                }
+            },
+            {
+                name: "Movie Recommendation Website",
+                description: "Built with HTML, CSS, JavaScript | APIs: Gemini & OMDb I developed a Movie Recommender web application that delivers personalized movie suggestions based on user moods, genres, and language preferences. The app integrates Gemini API for intelligent, NLP-based recommendations and OMDb API for rich movie details like posters and metadata.",
+                tech: "HTML, CSS, JavaScript, API integration and asynchronous",
+                features: [
+                    "Genre selection-based suggestions",
+                    "JavaScript-powered dynamic rendering",
+                    "Smooth and clean UI for better UX"
+                ],
+                links: {
+                    github: "https://github.com/karthik-ak-Git/movie-recommendation",
+                    linkedin: "https://www.linkedin.com/posts/atinarapu-karthik-683719363_im-happy-to-share-this-movie-recommendation-activity-7330865087131316224-O_kj"
+                }
+            },
+            {
+                name: "Sentiment Analysis Web Application",
+                description: "Built with HTML, CSS, JavaScript | APIs: Gemini & OMDb I developed a Movie Recommender web application that delivers personalized movie suggestions based on user moods, genres, and language preferences. The app integrates Gemini API for intelligent, NLP-based recommendations and OMDb API for rich movie details like posters and metadata.",
+                tech: "HTML5, CSS, JavaScript, Particles.js, Animate.css, Python, Flask, NLP libraries (e.g., TextBlob, NLTK)",
+                features: [
+                    "JavaScript-powered dynamic rendering",
+                    "Smooth and clean UI for better UX"
+                ],
+                links: {
+                    github: "https://github.com/karthik-ak-Git/Sentiment-analysis",
+                    linkedin: "https://www.linkedin.com/posts/atinarapu-karthik-683719363_im-happy-to-share-this-sentiment-analysis-activity-7330880615682080769--5Fv"
+                }
+            }
+        ],
+        experience: [
+            {
+                position: "Java Intern",
+                company: "Besant Technologies",
+                duration: "1 month",
+                technologies: ["Java", "OOP", "Java Applications"],
+                certificate: "/static/pdfs/java_internship.pdf"
+            },
+            {
+                position: "Machine Learning Engineer",
+                company: "Unified mentor",
+                employment_type: "part time",
+                start_date: "may-2025",
+                location: "Office 809, floor 8, JMD Megapolis, Sector 48, Gurugram, Haryana 122018",
+                location_type: "Remote",
+                duration: "6 months",
+                technologies: ["Machine Learning"],
+                skills: "Machine Learning",
+                description: "Learning the Machine Learning in the unified mentor with internship and industrial training",
+                offerletter: "/static/pdfs/1746371563744.pdf"
+            },
+            {
+                position: "Software Developer intern",
+                company: "Micro IT",
+                employment_type: "part time",
+                start_date: "may-2025",
+                location: "Ambala, Haryana, India",
+                location_type: "Remote",
+                duration: "1 month",
+                technologies: ["Artificial Intelligence/Machine Learning"],
+                skills: ["Machine Learning", "Artificial Intelligence"],
+                description: "Artificial intelligence and machine learning intern Excited to share that I've been selected for the Micro IT – Batch 28 Internship! Grateful for this opportunity to learn, grow, and innovate with a great team.",
+                offerletter: "/static/pdfs/Atinarapu Karthik T.R.R College of Technology.pdf"
+            }
+        ],
+        certifications: [
+            {
+                name: "Java Programming Training Certificate",
+                issuer: "Besant Technologies",
+                year: "2023",
+                pdf: "/static/pdfs/1746373378470.pdf"
+            }
+        ],
+        contact: {
+            whatsapp: "919492421154",
+            email: "karthik986340@gmail.com",
+            github: "karthik-ak-Git",
+            linkedin: "atinarapu-karthik-683719363"
+        },
+        resumes: {
+            technical: {
+                name: "Resume-1",
+                description: "View my technical skills and experience",
+                pdf: "/static/pdfs/White Orange Simple Sales Resume (7).pdf"
+            },
+            academic: {
+                name: "Resume-2",
+                description: "View my academic achievements and qualifications",
+                pdf: "/static/pdfs/ATINARAPU-KARTHIK-FlowCV-Resume-20250503 (2).pdf"
+            }
+        }
+    };
+
+    function getChatbotResponse(message) {
+        message = message.toLowerCase();
+        
+        // Greeting patterns
+        if (message.match(/^(hi|hello|hey|greetings)/i)) {
+            return `Hello! I'm ${portfolioInfo.name}'s portfolio assistant. I can tell you about their education, skills, projects, experience, and more. How can I help you today?`;
+        }
+
+        // About patterns
+        if (message.match(/about|who are you|tell me about/i)) {
+            return `${portfolioInfo.about}\n\nWhat specific aspect would you like to know more about?`;
+        }
+
+        // Education patterns
+        if (message.match(/education|study|degree|college|university|gpa/i)) {
+            let response = "Here's the complete education background:\n";
+            portfolioInfo.education.forEach(edu => {
+                response += `\n• ${edu.degree} at ${edu.institution}\n`;
+                response += `  Duration: ${edu.duration}\n`;
+                if (edu.gpa) response += `  GPA: ${edu.gpa}\n`;
+                if (edu.branch) response += `  Branch: ${edu.branch.join(', ')}\n`;
+                if (edu.achievements?.length) {
+                    response += `  Achievements:\n`;
+                    edu.achievements.forEach(achievement => {
+                        response += `    - ${achievement}\n`;
+                    });
+                }
+            });
+            return response;
+        }
+
+        // Skills patterns
+        if (message.match(/skills|technologies|what can you do|expertise/i)) {
+            let response = "Here are all the skills and technologies:\n";
+            for (const [category, skills] of Object.entries(portfolioInfo.skills)) {
+                response += `\n${category}:\n`;
+                skills.forEach(skill => {
+                    response += `• ${skill}\n`;
+                });
+            }
+            return response;
+        }
+
+        // Projects patterns
+        if (message.match(/projects|portfolio|work|applications/i)) {
+            let response = "Here are all the projects:\n";
+            portfolioInfo.projects.forEach(project => {
+                response += `\n• ${project.name}\n`;
+                response += `  Description: ${project.description}\n`;
+                response += `  Technologies: ${project.tech}\n`;
+                if (project.features?.length) {
+                    response += `  Key Features:\n`;
+                    project.features.forEach(feature => {
+                        response += `    - ${feature}\n`;
+                    });
+                }
+                if (project.links) {
+                    response += `  Links:\n`;
+                    if (project.links.github) response += `    - GitHub: ${project.links.github}\n`;
+                    if (project.links.linkedin) response += `    - LinkedIn: ${project.links.linkedin}\n`;
+                }
+            });
+            return response;
+        }
+
+        // Experience patterns
+        if (message.match(/experience|work|job|internship/i)) {
+            let response = "Here's the complete work experience:\n";
+            portfolioInfo.experience.forEach(exp => {
+                response += `\n• ${exp.position} at ${exp.company}\n`;
+                response += `  Duration: ${exp.duration}\n`;
+                if (exp.employment_type) response += `  Type: ${exp.employment_type}\n`;
+                if (exp.start_date) response += `  Start Date: ${exp.start_date}\n`;
+                if (exp.location) response += `  Location: ${exp.location}\n`;
+                if (exp.location_type) response += `  Location Type: ${exp.location_type}\n`;
+                if (exp.technologies?.length) {
+                    response += `  Technologies: ${exp.technologies.join(', ')}\n`;
+                }
+                if (exp.skills) {
+                    response += `  Skills: ${Array.isArray(exp.skills) ? exp.skills.join(', ') : exp.skills}\n`;
+                }
+                if (exp.description) response += `  Description: ${exp.description}\n`;
+            });
+            return response;
+        }
+
+        // Certifications patterns
+        if (message.match(/certifications|certificates|certified/i)) {
+            let response = "Here are all the certifications:\n";
+            portfolioInfo.certifications.forEach(cert => {
+                response += `\n• ${cert.name}\n`;
+                response += `  Issuer: ${cert.issuer}\n`;
+                response += `  Year: ${cert.year}\n`;
+            });
+            return response;
+        }
+
+        // Resume patterns
+        if (message.match(/resume|cv|curriculum vitae/i)) {
+            return `There are two resumes available:\n\n` +
+                   `1. ${portfolioInfo.resumes.technical.name}\n` +
+                   `   ${portfolioInfo.resumes.technical.description}\n\n` +
+                   `2. ${portfolioInfo.resumes.academic.name}\n` +
+                   `   ${portfolioInfo.resumes.academic.description}\n\n` +
+                   `You can view them in the Resume section of the portfolio.`;
+        }
+
+        // Contact patterns
+        if (message.match(/contact|reach|connect|get in touch|email|phone|whatsapp/i)) {
+            return `You can reach ${portfolioInfo.name} through:\n` +
+                   `• WhatsApp: +${portfolioInfo.contact.whatsapp}\n` +
+                   `• Email: ${portfolioInfo.contact.email}\n` +
+                   `• GitHub: github.com/${portfolioInfo.contact.github}\n` +
+                   `• LinkedIn: linkedin.com/in/${portfolioInfo.contact.linkedin}`;
+        }
+
+        // Help patterns
+        if (message.match(/help|what can you do|commands/i)) {
+            return `I can help you with information about:\n` +
+                   `• About ${portfolioInfo.name}\n` +
+                   `• Education and qualifications\n` +
+                   `• Skills and technologies\n` +
+                   `• Projects and applications\n` +
+                   `• Work experience\n` +
+                   `• Certifications\n` +
+                   `• Resumes\n` +
+                   `• Contact information\n\n` +
+                   `Just ask me about any of these topics! For example:\n` +
+                   `- "Tell me about your education"\n` +
+                   `- "What projects have you worked on?"\n` +
+                   `- "Show me your skills"\n` +
+                   `- "What's your work experience?"\n` +
+                   `- "How can I contact you?"`;
+        }
+
+        // Default response
+        return "I'm not sure I understand. You can ask me about education, skills, projects, experience, certifications, or contact information. Type 'help' for more options.";
+    }
+
+    function initializeChatbot() {
+        socket = io('http://localhost:5000');
+        
+        socket.on('connect', () => {
+            console.log('Connected to chatbot server');
+        });
+
+        socket.on('chat response', (response) => {
+            isTyping = false;
+            const typingIndicator = document.querySelector('.typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+            addMessage(response, 'bot');
+        });
+
+        socket.on('disconnect', () => {
+            console.log('Disconnected from chatbot server');
+        });
+    }
+
+    function sendMessage() {
+        const userInput = document.getElementById('userInput');
+        const message = userInput.value.trim();
+        
+        if (message && !isTyping) {
+            addMessage(message, 'user');
+            userInput.value = '';
+            
+            // Show typing indicator
+            isTyping = true;
+            const messagesContainer = document.getElementById('chatbotMessages');
+            const typingIndicator = document.createElement('div');
+            typingIndicator.className = 'message bot-message typing-indicator';
+            typingIndicator.innerHTML = '<span></span><span></span><span></span>';
+            messagesContainer.appendChild(typingIndicator);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            // Get response from chatbot
+            const response = getChatbotResponse(message);
+            
+            // Simulate typing delay
+            setTimeout(() => {
+                isTyping = false;
+                typingIndicator.remove();
+                addMessage(response, 'bot');
+            }, 1000);
+        }
+    }
+
+    function addMessage(message, sender) {
+        const messagesContainer = document.getElementById('chatbotMessages');
+        const messageElement = document.createElement('div');
+        messageElement.className = `message ${sender}-message`;
+        messageElement.textContent = message;
+        messagesContainer.appendChild(messageElement);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function showMessagePopup(popupId) {
+        const popup = document.getElementById(popupId);
+        popup.classList.add('active');
+    }
+
+    function closeMessagePopup(popupId) {
+        const popup = document.getElementById(popupId);
+        popup.classList.remove('active');
+    }
+
+    function openWhatsApp() {
+        window.open('https://wa.me/919492421154', '_blank');
+        closeMessagePopup('whatsappPopup');
+    }
+
+    function openEmail() {
+        window.location.href = 'mailto:karthik986340@gmail.com';
+        closeMessagePopup('emailPopup');
+    }
+
+    // Close popups when clicking outside
+    window.addEventListener('click', (e) => {
+        if (e.target.classList.contains('message-popup')) {
+            closeMessagePopup(e.target.id);
+        }
+    });
+
+    // Scroll Progress
+    window.addEventListener('scroll', () => {
+        const scrollProgress = document.querySelector('.scroll-progress');
+        const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+        scrollProgress.style.width = scrollPercent + '%';
+    });
+
+    // Back to Top
+    window.addEventListener('scroll', () => {
+        const backToTop = document.querySelector('.back-to-top');
+        if (window.scrollY > 300) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
+    });
+
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    // Skills Progress Animation
+    const observerOptions = {
+        threshold: 0.5
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const progressBar = entry.target;
+                const progress = progressBar.getAttribute('data-progress');
+                progressBar.style.width = progress + '%';
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.skill-progress-bar').forEach(bar => {
+        observer.observe(bar);
+    });
+
+    // Add light theme styles
+    const style = document.createElement('style');
+    style.textContent = `
+        body.light-theme {
+            background: var(--light-theme-bg);
+            color: var(--light-theme-text);
+        }
+
+        body.light-theme .navbar,
+        body.light-theme .contact-card,
+        body.light-theme .project-card,
+        body.light-theme .experience-item,
+        body.light-theme .certification-card,
+        body.light-theme .education-item,
+        body.light-theme .skill-item {
+            background: var(--light-theme-card);
+            border-color: var(--light-theme-border);
+        }
+
+        body.light-theme .nav-link,
+        body.light-theme .section-title,
+        body.light-theme h1,
+        body.light-theme h2,
+        body.light-theme h3,
+        body.light-theme p {
+            color: var(--light-theme-text);
+        }
+
+        body.light-theme .skill-name {
+            color: var(--light-theme-text);
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Loading animation
+    window.addEventListener('load', () => {
+        const loader = document.querySelector('.loading');
+        loader.style.opacity = '0';
+        setTimeout(() => {
+            loader.style.display = 'none';
+        }, 500);
+    });
+
+    function showSkillDetails(skillName, details) {
+        const modalBody = document.getElementById('modal-body');
+        modalBody.innerHTML = `
+            <div class="skill-details">
+                <h3>${skillName}</h3>
+                <div class="proficiency">
+                    <div>Proficiency Level</div>
+                    <div class="proficiency-bar">
+                        <div class="proficiency-level" style="width: ${details.proficiency}%"></div>
+                    </div>
+                </div>
+                <div class="description">${details.description}</div>
+                <div class="projects">
+                    <h4>Related Projects</h4>
+                    <ul>
+                        ${details.projects.map(project => `<li>${project}</li>`).join('')}
+                    </ul>
+                </div>
+            </div>
+        `;
+
+        const modal = document.getElementById('detailsModal');
+        modal.style.display = 'block';
+        setTimeout(() => {
+            modal.classList.add('active');
+            const proficiencyBar = modalBody.querySelector('.proficiency-level');
+            proficiencyBar.style.width = details.proficiency + '%';
+        }, 10);
+    }
+    </script>
+</body>
+</html>
