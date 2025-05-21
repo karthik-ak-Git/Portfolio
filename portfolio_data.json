@@ -1,0 +1,89 @@
+{
+    "projects": [
+        {
+            "id": 1,
+            "title": "Diploma Learn – Educational Study Platform",
+            "tech": "HTML, CSS, JavaScript",
+            "description": "Study resource website used by 50+ diploma students, increasing material accessibility by 30%.",
+            "link": "http://ak47.infinityfreeapp.com",
+            "features": [
+                "Responsive design for desktop and mobile",
+                "Clean and intuitive UI",
+                "Improved access to academic materials"
+            ]
+        },
+        {
+            "id": 2,
+            "title": "Movie Recommendation Website",
+            "tech": "HTML, CSS, JavaScript",
+            "description": "A genre-based movie recommendation app with a focus on dynamic content and user-friendly interface.",
+            "link": "https://github.com/karthik-ak-Git",
+            "features": [
+                "Genre selection-based suggestions",
+                "JavaScript-powered dynamic rendering",
+                "Smooth and clean UI for better UX"
+            ]
+        }
+    ],
+    "experience": [
+        {
+            "id": 1,
+            "company": "Besant Technologies",
+            "position": "Java Intern",
+            "duration": "2023",
+            "achievements": [
+                "Completed hands-on training in Core Java",
+                "Developed 2 deployable mini-projects",
+                "Mastered object-oriented programming concepts"
+            ],
+            "technologies": ["Core Java", "OOP", "Java Applications"]
+        }
+    ],
+    "education": [
+        {
+            "id": 1,
+            "degree": "Diploma (Lateral Entry) - B.Tech in Computer Science",
+            "institution": "TRR College of Technology",
+            "duration": "Currently in 3rd year (2021–2025)",
+            "achievements": [
+                "Active participant in technical workshops and seminars",
+                "Member of the college's technical club",
+                "Participated in various coding competitions"
+            ],
+            "courses": [
+                "Data Structures and Algorithms",
+                "Object-Oriented Programming",
+                "Database Management Systems",
+                "Web Development",
+                "Artificial Intelligence"
+            ],
+            "gpa": "8.5"
+        },
+        {
+            "id": 2,
+            "degree": "Secondary School Certificate (SSC)",
+            "institution": "ZPHS Shivarampally",
+            "duration": "Completed in 2023",
+            "achievements": [
+                "Secured distinction in Mathematics and Science",
+                "Active participant in science exhibitions",
+                "Member of the school's science club"
+            ],
+            "gpa": "8.7"
+        }
+    ],
+    "skills": {
+        "programming": {
+            "C/C++": 85,
+            "Java": 80,
+            "Python": 75
+        },
+        "web": {
+            "HTML5": 90,
+            "CSS3": 85,
+            "JavaScript": 80
+        },
+        "tools": ["Git", "GitHub", "VS Code"],
+        "learning": ["AI/ML", "Cybersecurity"]
+    }
+} 
