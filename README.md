@@ -80,8 +80,8 @@ Portfolio/
 ## Contact
 
 For any inquiries or collaboration opportunities, please reach out through:
-- Email: karthik@example.com
-- LinkedIn: linkedin.com/in/karthik
+- Email: karthik986340@example.com
+- LinkedIn: [linkedin.com/in/karthik](https://www.linkedin.com/in/atinarapu-karthik-683719363/)
 
 ## License
 
